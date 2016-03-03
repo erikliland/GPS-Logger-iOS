@@ -25,10 +25,6 @@
     NSLog(@"Application launched with options: %@", launchOptions);
     
     [GLManager sharedManager];
-    
-    if([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
-        [[GLManager sharedManager] logAction:@"application_launched_with_location"];
-    }
 
     return YES;
 }
@@ -61,15 +57,13 @@
 }
 
 // App launched by clicking a URL
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-{
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     if([[url host] isEqualToString:@"setup"]) {
-        NSString *endpoint = [[url query] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+		NSString *endpoint = [[url query] stringByRemovingPercentEncoding];
         NSLog(@"Saving new API Endpoint: %@", endpoint);
         [[NSUserDefaults standardUserDefaults] setObject:endpoint forKey:GLAPIEndpointDefaultsName];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
     return YES;
 }
 

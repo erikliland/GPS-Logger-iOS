@@ -1,46 +1,32 @@
-//
-//  FirstViewController.h
-//  GPSLogger
-//
-//  Created by Aaron Parecki on 9/17/15.
-//  Copyright © 2015 Esri. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
+@interface FirstViewController : UIViewController{
+	// https://github.com/esripdx/GPS-Logger-iOS
+	// http://mobisoftinfotech.com/resources/blog/iphone/ios-tutorial-custom-speedometer-control/
+	UIImageView *needleImageView;
+	float speedometerCurrentValue;
+	float prevAngleFactor;
+	float angle;
+	NSTimer *speedometer_Timer;
+	UILabel *speedometerReading;
+	NSString *maxVal;
+}
 
-@property (strong, nonatomic) IBOutlet UILabel *accountInfo;
+@property(nonatomic, retain) UIImageView *needleImageView;
+@property(nonatomic,assign) float speedometerCurrentValue;
+@property(nonatomic,assign) float prevAngleFactor;
+@property(nonatomic,assign) float angle;
+@property(nonatomic, retain) NSTimer *speedometer_Timer;
+@property(nonatomic, retain) UILabel *speedometerReading;
+@property(nonatomic,retain) NSString *maxVal;
+@property(strong, nonatomic) IBOutlet UILabel *locationSpeedLabel;
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *trackingEnabledToggle;
+//@property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 
-@property (strong, nonatomic) IBOutlet UISlider *sendIntervalSlider;
-@property (strong, nonatomic) IBOutlet UILabel *sendIntervalLabel;
-@property (strong, nonatomic) IBOutlet UIButton *sendNowButton;
-
-@property (strong, nonatomic) IBOutlet UILabel *locationLabel;
-@property (strong, nonatomic) IBOutlet UILabel *locationSpeedLabel;
-@property (strong, nonatomic) IBOutlet UILabel *locationAltitudeLabel;
-@property (strong, nonatomic) IBOutlet UILabel *locationAgeLabel;
-
-@property (strong, nonatomic) IBOutlet UILabel *motionTypeLabel;
-
-@property (strong, nonatomic) IBOutlet UILabel *queueLabel;
-@property (strong, nonatomic) IBOutlet UILabel *queueAgeLabel;
-
-- (IBAction)sendIntervalDragged:(UISlider *)sender;
-- (IBAction)sendIntervalChanged:(UISlider *)sender;
-- (IBAction)toggleLogging:(id)sender;
-- (IBAction)sendQueue:(id)sender;
-- (IBAction)locationAgeWasTapped:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UIImageView *currentModeImage;
-@property (strong, nonatomic) IBOutlet UILabel *currentModeLabel;
-- (IBAction)tripModeWasTapped:(id)sender;
-@property (strong, nonatomic) IBOutlet UILabel *tripDurationLabel;
-@property (strong, nonatomic) IBOutlet UILabel *tripDistanceLabel;
-@property (strong, nonatomic) IBOutlet UIButton *tripStartStopButton;
-- (IBAction)tripStartStopWasTapped:(id)sender;
+-(void) addMeterViewContents;
+-(void) rotateIt:(float)angl;
+-(void) rotateNeedle;
+-(void) calculateDeviationAngle;
 
 @end
 

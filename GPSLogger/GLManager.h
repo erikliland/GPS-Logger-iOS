@@ -1,18 +1,10 @@
-//
-//  GLManager.h
-//  GPSLogger
-//
-//  Created by Aaron Parecki on 9/17/15.
-//  Copyright © 2015 Esri. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
 
-static NSString *const GLNewDataNotification = @"GLNewDataNotification";
-static NSString *const GLSendingStartedNotification = @"GLSendingStartedNotification";
-static NSString *const GLSendingFinishedNotification = @"GLSendingFinishedNotification";
+static NSString *const GLNewDataNotification = @"GLNewDataNotification"; //KEEP
+//static NSString *const GLSendingStartedNotification = @"GLSendingStartedNotification";
+//static NSString *const GLSendingFinishedNotification = @"GLSendingFinishedNotification";
 
 static NSString *const GLAPIEndpointDefaultsName = @"GLAPIEndpointDefaults";
 static NSString *const GLLastSentDateDefaultsName = @"GLLastSentDateDefaults";
@@ -52,7 +44,6 @@ typedef enum {
 
 @property (strong, nonatomic, readonly) CLLocationManager *locationManager;
 @property (strong, nonatomic, readonly) CMMotionActivityManager *motionActivityManager;
-
 @property (strong, nonatomic) NSNumber *sendingInterval;
 @property BOOL pausesAutomatically;
 @property (nonatomic) CLLocationDistance resumesAfterDistance;
@@ -60,7 +51,6 @@ typedef enum {
 @property (nonatomic) CLActivityType activityType;
 @property (nonatomic) CLLocationAccuracy desiredAccuracy;
 @property (nonatomic) CLLocationDistance defersLocationUpdates;
-
 @property (readonly) BOOL trackingEnabled;
 @property (readonly) BOOL sendInProgress;
 @property (strong, nonatomic, readonly) CLLocation *lastLocation;
@@ -70,34 +60,9 @@ typedef enum {
 
 - (void)startAllUpdates;
 - (void)stopAllUpdates;
-- (void)refreshLocation;
 
-- (void)saveNewAPIEndpoint:(NSString *)endpoint;
-
-- (void)logAction:(NSString *)action;
-- (void)sendQueueNow;
-- (void)notify:(NSString *)message withTitle:(NSString *)title;
-
-- (void)numberOfLocationsInQueue:(void(^)(long num))callback;
-- (void)accountInfo:(void(^)(NSString *name))block;
-- (NSSet <__kindof CLRegion *>*)monitoredRegions;
-
-#pragma mark - Trips
-
-+ (NSArray *)GLTripModes;
-- (BOOL)tripInProgress;
-@property (nonatomic) NSString *currentTripMode;
-- (NSDate *)currentTripStart;
-- (CLLocationDistance)currentTripDistance;
-- (NSTimeInterval)currentTripDuration;
-- (double)currentTripSpeed;
-- (void)startTrip;
-- (void)endTrip;
-
-#pragma mark -
-
-- (void)applicationWillTerminate;
+#pragma mark - AppDelegate Methods
 - (void)applicationDidEnterBackground;
+- (void)applicationWillTerminate;
 - (void)applicationWillResignActive;
-
 @end
