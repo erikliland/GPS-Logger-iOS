@@ -7,7 +7,7 @@
 //
 
 #import "SecondViewController.h"
-#import "GLManager.h"
+//#import "GLManager.h"
 
 @interface SecondViewController ()
 

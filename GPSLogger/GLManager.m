@@ -3,7 +3,6 @@
 @interface GLManager()
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property BOOL trackingEnabled;
 @property (strong, nonatomic) CLLocation *lastLocation;
 
 @end
@@ -23,30 +22,11 @@
 
 #pragma mark - GLManager control (public)
 - (void)startAllUpdates {
-    [self enableTracking];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:GLTrackingStateDefaultsName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+	[self.locationManager requestWhenInUseAuthorization];
+	[self.locationManager startUpdatingLocation];
 }
 - (void)stopAllUpdates {
-    [self disableTracking];
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:GLTrackingStateDefaultsName];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-#pragma mark - GLManager control (private)
-- (void)enableTracking {
-    self.trackingEnabled = YES;
-    [self.locationManager requestWhenInUseAuthorization];
-    [self.locationManager startUpdatingLocation];
-    //[self.locationManager startUpdatingHeading];
-    //[self.locationManager startMonitoringVisits];
-}
-- (void)disableTracking {
-    self.trackingEnabled = NO;
 	[self.locationManager stopUpdatingLocation];
-    //[self.locationManager stopMonitoringVisits];
-    //[self.locationManager stopUpdatingHeading];
-    //[self.locationManager stopMonitoringSignificantLocationChanges];
 }
 
 #pragma mark - Properties
@@ -65,19 +45,8 @@
 
 #pragma mark - CLLocationManager Delegate Methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    [[NSNotificationCenter defaultCenter] postNotificationName:GLNewDataNotification object:self];
-    self.lastLocation = (CLLocation *)locations[0];
-    
-    NSLog(@"Received %d locations", (int)locations.count);
+	self.lastLocation = (CLLocation *)locations[0];
+	[[NSNotificationCenter defaultCenter] postNotificationName:GLNewDataNotification object:self];
 }
-#pragma mark - AppDelegate Methods
-- (void)applicationDidEnterBackground {
-    //[self logAction:@"did_enter_background"];
-}
-- (void)applicationWillTerminate {
-    //[self logAction:@"will_terminate"];
-}
-- (void)applicationWillResignActive {
-    //[self logAction:@"will_resign_active"];
-}
+ 
 @end
